@@ -1,10 +1,20 @@
-# table and data for batteries
+#drop exisitng tables
+drop table if exists `TiresAvailability`;
+drop table if exists `WheelAvailability`;
+drop table if exists `Orders`;
 drop table if exists `Batteries`;
+drop table if exists `Tires`;
+drop table if exists `Wheels`;
+
+
+# table and data for batteries
 create table Batteries
 (
-	Battery varchar(64) not null comment 'Name of Battery'
-		primary key,
-	Price int default 0 not null comment 'Additional Price of Battery Model '
+    ID int auto_increment comment 'ID of Battery',
+	Battery varchar(64) not null comment 'Name of Battery',
+	Price int default 0 not null comment 'Additional Price of Battery Model',
+    constraint Batteries._pk
+    primary key (ID)
 );
 
 insert into Batteries (Battery, Price) values ('40 kwh', 0);
@@ -12,12 +22,13 @@ insert into Batteries (Battery, Price) values ('60 kwh', 2500);
 insert into Batteries (Battery, Price) values ('80 kwh', 6000);
 
 # table and data for tires
-drop table if exists `Tires`;
 create table Tires
 (
-	Tire varchar(32) not null comment 'Name of the Tire profile'
-		primary key,
-	Price int not null comment 'Additional Price of the tire'
+    ID int auto_increment comment 'ID of Tires',
+	Tire varchar(32) not null comment 'Name of the Tire profile',
+	Price int not null comment 'Additional Price of the tire',
+    constraint Tires._pk
+    primary key (ID)
 );
 
 insert into Tires (Tire, Price) values ('Eco', 0);
@@ -25,12 +36,13 @@ insert into Tires (Tire, Price) values ('Performance', 80);
 insert into Tires (Tire, Price) values ('Racing', 150);
 
 # table and data for wheels
-drop table if exists `Wheels`;
 create table Wheels
 (
-	Wheel varchar(32) not null comment 'Name of the Wheel'
-		primary key,
-	Price int not null comment 'Additional Price of the wheel model'
+    ID int auto_increment comment 'ID of Wheels',
+	Wheel varchar(32) not null comment 'Name of the Wheel',
+	Price int not null comment 'Additional Price of the wheel model',
+    constraint Wheels._pk
+    primary key (ID)
 );
 
 insert into Wheels (Wheel, Price) values ('Model 1', 0);
@@ -38,43 +50,61 @@ insert into Wheels (Wheel, Price) values ('Model 2', 150);
 insert into Wheels (Wheel, Price) values ('Model 3', 350);
 
 # table and data for TiresAvailability, relationship between tire and wheel
-drop table if exists `TiresAvailability`;
 create table TiresAvailability
 (
-	TireName varchar(32) not null,
-	WheelName varchar(32) not null,
+	TireID int not null ,
+	WheelID int not null,
 	constraint TiresAvailability_Tires_Tire_fk
-		foreign key (TireName) references Tires (Tire),
+		foreign key (TireID) references Tires (ID),
 	constraint TiresAvailability_Wheels_Wheel_fk
-		foreign key (WheelName) references Wheels (Wheel)
+		foreign key (WheelID) references Wheels (ID)
 )
 comment 'Availability of tires depends on the wheel model choice';
 
-insert into TiresAvailability (TireName, WheelName) values ('Eco', 'model 1');
-insert into TiresAvailability (TireName, WheelName) values ('Eco', 'model 2');
-insert into TiresAvailability (TireName, WheelName) values ('Eco', 'model 3');
-insert into TiresAvailability (TireName, WheelName) values ('Performance', 'model 2');
-insert into TiresAvailability (TireName, WheelName) values ('Performance', 'model 3');
-insert into TiresAvailability (TireName, WheelName) values ('Racing', 'model 3');
+insert into TiresAvailability (TireID, WheelID) values (1, 1);
+insert into TiresAvailability (TireID, WheelID) values (1, 2);
+insert into TiresAvailability (TireID, WheelID) values (1, 3);
+insert into TiresAvailability (TireID, WheelID) values (2, 2);
+insert into TiresAvailability (TireID, WheelID) values (2, 3);
+insert into TiresAvailability (TireID, WheelID) values (3, 3);
 
 # table and data for TiresAvailability, relationship between battery and wheel
-drop table if exists `WheelAvailability`;
 create table WheelAvailability
 (
-	BatteryName varchar(64) not null,
-	WheelName varchar(32) not null,
+	BatteryID int not null,
+	WheelID int not null,
 	constraint WheelAvaibility_Batteries_Battery_fk
-		foreign key (BatteryName) references Batteries (Battery),
+		foreign key (BatteryID) references Batteries (ID),
 	constraint WheelAvaibility_Wheels_Wheel_fk
-		foreign key (WheelName) references Wheels (Wheel)
+		foreign key (WheelID) references Wheels (ID)
 )
 comment 'Availability of wheel depends on the battery choice';
 
-insert into WheelAvailability (BatteryName, WheelName) values ('40 kwh', 'model 1');
-insert into WheelAvailability (BatteryName, WheelName) values ('40 kwh', 'model 2');
-insert into WheelAvailability (BatteryName, WheelName) values ('60 kwh', 'model 1');
-insert into WheelAvailability (BatteryName, WheelName) values ('60 kwh', 'model 2');
-insert into WheelAvailability (BatteryName, WheelName) values ('60 kwh', 'model 3');
-insert into WheelAvailability (BatteryName, WheelName) values ('80 kwh', 'model 1');
-insert into WheelAvailability (BatteryName, WheelName) values ('80 kwh', 'model 2');
-insert into WheelAvailability (BatteryName, WheelName) values ('80 kwh', 'model 3');
+insert into WheelAvailability (BatteryID, WheelID) values (1, 1);
+insert into WheelAvailability (BatteryID, WheelID) values (1, 2);
+insert into WheelAvailability (BatteryID, WheelID) values (2, 1);
+insert into WheelAvailability (BatteryID, WheelID) values (2, 2);
+insert into WheelAvailability (BatteryID, WheelID) values (2, 3);
+insert into WheelAvailability (BatteryID, WheelID) values (3, 1);
+insert into WheelAvailability (BatteryID, WheelID) values (3, 2);
+insert into WheelAvailability (BatteryID, WheelID) values (3, 3);
+
+#Tables recording car orders
+create table Orders
+(
+    ID int auto_increment,
+    TireID int not null,
+    WheelID int not null,
+    BatteryID int not null,
+    Discount bool default false not null,
+    NetCost int not null,
+    FinalCost int not null,
+    constraint Orders_pk
+        primary key (ID),
+    constraint Orders_Batteries_ID_fk
+        foreign key (BatteryID) references Batteries (ID),
+    constraint Orders_Tires_ID_fk
+        foreign key (TireID) references Tires (ID),
+    constraint Orders_Wheels_ID_fk
+        foreign key (WheelID) references Wheels (ID)
+);
