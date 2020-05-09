@@ -21,6 +21,7 @@ export class OrderComponent implements OnInit {
   showTireSelect = false
   showSubmit = false
   orderSubmitted = false
+  networkError = false;
 
   selectedBatteryId;
   selectedWheelId;
@@ -31,9 +32,12 @@ export class OrderComponent implements OnInit {
   private readonly notifier: NotifierService;
   constructor(notifierService: NotifierService, private orderService : OrderService) {
     this.notifier = notifierService;
-    orderService.getBatteries().subscribe(
+  }
+
+  ngOnInit(): void {
+    this.orderService.getBatteries().subscribe(
       data => this.batteryList = data,
-      error => console.error('There was an error!', error)
+      error => {console.error('There was an error!', error), this.networkError=true}
     )
   }
 
@@ -41,7 +45,7 @@ export class OrderComponent implements OnInit {
     this.selectedBatteryId = batteryId
     this.orderService.getWheels(batteryId).subscribe(
       data => {console.log(data),this.wheelList = data, this.showWheelSelect = true},
-      error => console.error('There was an error!', error)
+      error => { console.error('There was an error!', error) , this.networkError=true}
     )
   }
 
@@ -49,7 +53,7 @@ export class OrderComponent implements OnInit {
     this.selectedWheelId = wheelId
     this.orderService.getTires(wheelId).subscribe(
       data => {this.tireList = data, this.showTireSelect = true},
-      error => console.error('There was an error!', error)
+      error => { console.error('There was an error!', error), this.networkError=true}
     )
   }
 
@@ -73,14 +77,9 @@ export class OrderComponent implements OnInit {
     console.log(order)
     this.orderService.submitOrder(order).subscribe(
       data => {console.log(data), this.orderConfirmation = data , this.orderSubmitted = true},
-      error => console.error('There was an error!', error)
+      error => {console.error('There was an error!', error), this.networkError=true}
     )
   }
-
-  ngOnInit(): void {
-  }
-
-
 
 }
 

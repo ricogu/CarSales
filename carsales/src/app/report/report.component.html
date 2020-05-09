@@ -1,0 +1,33 @@
+<table width="200" border="1">
+  <tbody>
+  <tr>
+    <th scope="col">OrderId</th>
+    <th scope="col">Customer Name</th>
+    <th scope="col">Base Price</th>
+    <th scope="col">Battery Name</th>
+    <th scope="col">Battery Cost</th>
+    <th scope="col">Wheel Name</th>
+    <th scope="col">Wheel Cost</th>
+    <th scope="col">Tire Name</th>
+    <th scope="col">Tire Cost</th>
+    <th scope="col">Net Price</th>
+    <th scope="col">Discount</th>
+    <th scope="col">Total Price</th>
+  </tr>
+  <tr *ngFor="let order of orders">
+    <td>{{order.Id}}</td>
+    <td>{{order.CustomerName}}</td>
+    <td>{{order.BasePrice}}</td>
+    <td>{{order.BatteryName}}</td>
+    <td>{{order.BatteryCost}}</td>
+    <td>{{order.WheelName}}</td>
+    <td>{{order.WheelCost}}</td>
+    <td>{{order.TireName}}</td>
+    <td>{{order.TireCost}}</td>
+    <td>{{order.NetCost}}</td>
+    <td>{{order.Discount}}</td>
+    <td>{{order.FinalCost}}</td>
+  </tr>
+
+  </tbody>
+</table>

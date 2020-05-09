@@ -28,7 +28,9 @@
 
   <button *ngIf="showSubmit" [disabled]="orderSubmitted" type="button" (click)="submitOrder()">Place Order</button>
 </div>
-
+<div *ngIf="networkError" class=detail>
+  Currently there is some network issue, please try again later
+</div>
 <div *ngIf="orderSubmitted" class=detail>
   <p>Your order has been submitted!, Please find below the details</p>
   <table width="200" border="0">

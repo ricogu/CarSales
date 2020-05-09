@@ -6,11 +6,13 @@ import { OrderComponent } from './order/order.component';
 import { HttpClientModule } from "@angular/common/http";
 import { NotifierModule } from "angular-notifier";
 import {FormsModule} from "@angular/forms";
+import { ReportComponent } from './report/report.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    OrderComponent
+    OrderComponent,
+    ReportComponent
   ],
   imports: [
     BrowserModule,
