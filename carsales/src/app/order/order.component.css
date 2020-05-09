@@ -1,0 +1,29 @@
+.order {
+  max-width: 1000px;
+  margin: auto;
+  left: 1%;
+  right: 1%;
+  position: absolute;
+}
+
+.detail {
+  max-width: 1000px;
+  margin: auto;
+  top: 40%;
+  left: 1%;
+  right: 1%;
+  position: absolute;
+}
+
+form, input {
+  display: block;
+}
+
+form {
+  margin-bottom: 20px;
+}
+
+th {
+  background-color: #4CAF50;
+  color: white;
+}

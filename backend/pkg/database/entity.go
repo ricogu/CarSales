@@ -29,14 +29,16 @@ type TiresAvailability struct {
 }
 
 type Orders struct {
-	Id          int    `db:"ID"`
-	TireName    string `db:"Tire"`
-	TireCost    int    `db:"TirePrice"`
-	BatteryName string `db:"Battery"`
-	BatteryCost int    `db:"BatteryPrice"`
-	WheelName   string `db:"Wheel"`
-	WheelCost   int    `db:"WheelPrice"`
-	Discount    bool   `db:"Discount"`
-	NetCost     int    `db:"NetCost"`
-	FinalCost   int    `db:"FinalCost"`
+	Id           int    `db:"ID"`
+	CustomerName string `db:"CustomerName"`
+	BasePrice    int    `db:"BasePrice"`
+	TireName     string `db:"Tire"`
+	TireCost     int    `db:"TirePrice"`
+	BatteryName  string `db:"Battery"`
+	BatteryCost  int    `db:"BatteryPrice"`
+	WheelName    string `db:"Wheel"`
+	WheelCost    int    `db:"WheelPrice"`
+	Discount     bool   `db:"Discount"`
+	NetCost      int    `db:"NetCost"`
+	FinalCost    int    `db:"FinalCost"`
 }

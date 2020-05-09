@@ -1,0 +1,83 @@
+<div class="order"><h3>Car Ordering System UI</h3>
+  <form>
+    <label for="name">Name:</label>
+    <input  type="text" [(ngModel)]="customerName" id="name" name="name">
+  </form>
+  <form><label>Choose a Battery</label>
+    <select id="battery" (change)= "filterWheel($event.target.value)">
+      <option disabled selected value> -- select an option -- </option>
+      <option [value]= "battery.Id" *ngFor="let battery of batteryList">{{battery.Name}}</option>
+    </select>
+  </form>
+
+  <form *ngIf="showWheelSelect">
+    <label>Choose a Wheel Model</label>
+    <select id="wheel" (change)= "filterTire($event.target.value)">
+      <option disabled selected value> -- select an option -- </option>
+      <option [value]= "wheel.Id" *ngFor="let wheel of wheelList">{{wheel.Name}}</option>
+    </select>
+  </form>
+
+  <form *ngIf="showTireSelect">
+    <label>Choose a Tire Profile</label>
+    <select id="tire" (change)="selectTire($event.target.value)">
+      <option disabled selected value> -- select an option -- </option>
+      <option [value]= "tire.Id" *ngFor="let tire of tireList">{{tire.Name}}</option>
+    </select>
+  </form>
+
+  <button *ngIf="showSubmit" [disabled]="orderSubmitted" type="button" (click)="submitOrder()">Place Order</button>
+</div>
+
+<div *ngIf="orderSubmitted" class=detail>
+  <p>Your order has been submitted!, Please find below the details</p>
+  <table width="200" border="0">
+  <tbody>
+  <tr>
+    <th>Item</th>
+    <th>Name</th>
+    <th>Price</th>
+  </tr>
+  <tr>
+    <th scope="row">Car Base Price</th>
+    <td></td>
+    <td>{{orderConfirmation.BasePrice}}</td>
+
+  </tr>
+  <tr>
+    <th scope="row">Battery</th>
+    <td>{{orderConfirmation.BatteryName}}</td>
+    <td>{{orderConfirmation.BatteryCost}}</td>
+  </tr>
+  <tr>
+    <th scope="row">Wheel</th>
+    <td>{{orderConfirmation.WheelName}}</td>
+    <td>{{orderConfirmation.WheelCost}}</td>
+  </tr>
+  <tr>
+    <th scope="row">Tire</th>
+    <td>{{orderConfirmation.TireName}}</td>
+    <td>{{orderConfirmation.TireCost}}</td>
+  </tr>
+  <tr>
+    <th scope="row">Net Price</th>
+    <td></td>
+    <td>{{orderConfirmation.NetCost}}</td>
+  </tr>
+  <tr>
+    <th scope="row">DISCOUNT</th>
+    <td></td>
+    <td>{{orderConfirmation.Discount?-2000:0}}</td>
+  </tr>
+  <tr>
+    <th scope="row">Final Price</th>
+    <td></td>
+    <td>{{orderConfirmation.FinalCost}}</td>
+  </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+

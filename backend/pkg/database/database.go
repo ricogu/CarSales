@@ -33,6 +33,20 @@ func (c *SqlManager) ListAllBatteries() ([]Batteries, error) {
 	return battery, err
 }
 
+func (c *SqlManager) ListAllOrders() ([]Orders, error) {
+	var order []Orders
+	getStatement := fmt.Sprintf(
+		`select Orders.CustomerName,Orders.BasePrice, Orders.ID,B.Battery as Battery, B.Price as BatteryPrice,
+                    T.Tire as Tire , T.Price as TirePrice, 
+                    W.Wheel as Wheel, W.Price as WheelPrice, 
+                    Discount, NetCost, FinalCost from Orders
+					join Batteries B on Orders.BatteryID = B.ID
+					join Tires T on Orders.TireID = T.ID
+					join Wheels W on Orders.WheelID = W.ID`)
+	err := c.db.Select(&order, getStatement)
+	return order, err
+}
+
 func (c *SqlManager) GetABattery(batteryId int) (Batteries, error) {
 	var battery Batteries
 	statement := fmt.Sprintf(`SELECT * FROM Batteries WHERE ID = '%d'`, batteryId)
@@ -54,7 +68,7 @@ func (c *SqlManager) GetATire(tireId int) (Tires, error) {
 	return tire, err
 }
 
-func (c *SqlManager) SubmitOrder(batteryId int, tireId int, wheelId int) (Orders, error) {
+func (c *SqlManager) SubmitOrder(customerName string, batteryId int, tireId int, wheelId int) (Orders, error) {
 	var order Orders
 
 	battery, err := c.GetABattery(batteryId)
@@ -92,8 +106,8 @@ func (c *SqlManager) SubmitOrder(batteryId int, tireId int, wheelId int) (Orders
 	}
 
 	//insert order records into DB
-	insertStatement := fmt.Sprintf(`INSERT INTO Orders (TireID, WheelID, BatteryID, Discount, NetCost, FinalCost )
-				values (%d,%d,%d,%t,%d,%d)`,
+	insertStatement := fmt.Sprintf(`INSERT INTO Orders (CustomerName, BasePrice, TireID, WheelID, BatteryID, Discount, NetCost, FinalCost )
+				values ('%s',%d,%d,%d,%d,%t,%d,%d)`, customerName, BASEPRICE,
 		tireId,
 		wheelId,
 		batteryId,
@@ -108,7 +122,7 @@ func (c *SqlManager) SubmitOrder(batteryId int, tireId int, wheelId int) (Orders
 	}
 
 	getStatement := fmt.Sprintf(
-		`select Orders.ID,B.Battery as Battery, B.Price as BatteryPrice,
+		`select Orders.CustomerName,Orders.BasePrice, Orders.ID,B.Battery as Battery, B.Price as BatteryPrice,
                     T.Tire as Tire , T.Price as TirePrice, 
                     W.Wheel as Wheel, W.Price as WheelPrice, 
                     Discount, NetCost, FinalCost from Orders
@@ -158,7 +172,7 @@ func isLastFriday(t time.Time) bool {
 func (c *SqlManager) ListWheelsByBattery(batteryId int) ([]Wheels, error) {
 	var wheel []Wheels
 	statement := fmt.Sprintf(
-		`SELECT W.Wheel, W.Price FROM Batteries 
+		`SELECT W.ID, W.Wheel, W.Price FROM Batteries 
 				JOIN WheelAvailability WA on Batteries.ID = WA.BatteryID
 				JOIN Wheels W on WA.WheelID = W.ID
                 WHERE Batteries.ID = '%d'`, batteryId)
@@ -170,7 +184,7 @@ func (c *SqlManager) ListWheelsByBattery(batteryId int) ([]Wheels, error) {
 func (c *SqlManager) ListTiresByWheel(wheelId int) ([]Tires, error) {
 	var tires []Tires
 	statement := fmt.Sprintf(
-		`SELECT T.Tire, T.Price FROM Wheels
+		`SELECT T.ID, T.Tire, T.Price FROM Wheels
  				JOIN TiresAvailability TA on Wheels.ID = TA.WheelID
  				JOIN Tires T on TA.TireID = T.ID
 				WHERE Wheels.ID = '%d'`, wheelId)

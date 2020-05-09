@@ -26,6 +26,7 @@ func main() {
 	router.HandleFunc("/Wheels", RESTHandler.GetWheels).Methods("GET")
 	router.HandleFunc("/Tires", RESTHandler.GetTires).Methods("GET")
 	router.HandleFunc("/Orders", RESTHandler.SubmitOrder).Methods("POST")
+	router.HandleFunc("/Orders", RESTHandler.GetOrders).Methods("GET")
 
 	log.Fatal(http.ListenAndServe(":8000", router))
 

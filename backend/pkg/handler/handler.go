@@ -31,6 +31,18 @@ func (handler *RESTHandler) GetBatteries(w http.ResponseWriter, r *http.Request)
 	json.NewEncoder(w).Encode(batteries)
 }
 
+func (handler *RESTHandler) GetOrders(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	log.Println("#getOrders")
+
+	orders, err := handler.sql.ListAllOrders()
+	if err != nil {
+		handleError(w, err)
+	}
+
+	json.NewEncoder(w).Encode(orders)
+}
+
 func (handler *RESTHandler) GetWheels(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	log.Println("#getWheelsByBattery")
@@ -39,7 +51,7 @@ func (handler *RESTHandler) GetWheels(w http.ResponseWriter, r *http.Request) {
 
 	if !ok || len(batteryIds[0]) < 1 {
 		log.Println("Url Param 'batteryId' is missing")
-		handleError(w, errors.New("Url Param 'batteryId' is missing"))
+		handleError(w, errors.New("url param 'batteryId' is missing"))
 		return
 	}
 
@@ -101,7 +113,7 @@ func (handler *RESTHandler) SubmitOrder(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	orderSubmitted, err := handler.sql.SubmitOrder(orderReceived.BatteryId, orderReceived.TireId, orderReceived.WheelId)
+	orderSubmitted, err := handler.sql.SubmitOrder(orderReceived.CustomerName, orderReceived.BatteryId, orderReceived.TireId, orderReceived.WheelId)
 
 	if err != nil {
 		handleError(w, err)

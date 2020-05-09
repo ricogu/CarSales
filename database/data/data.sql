@@ -93,6 +93,8 @@ insert into WheelAvailability (BatteryID, WheelID) values (3, 3);
 create table Orders
 (
     ID int auto_increment,
+    CustomerName varchar(32) not null comment 'Name of the Customer',
+    BasePrice int not null,
     TireID int not null,
     WheelID int not null,
     BatteryID int not null,
