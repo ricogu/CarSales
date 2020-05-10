@@ -7,6 +7,10 @@ The service is build with the following component
   The simple web page for configure and report, build in Angular 9 operating in ngix-alpine container
 * Backend  <br>
   The backend to serve the actual configuring and reporting functionality, built in golang and operated in alpine container
+* Database <br>
+  The persistent layer of the sales data, it includes all the data as well as the order restrictions, using mysql
+* Database client <br>
+  Simple phpmyadmin client include to view the database schema design
 
 ## How to run the service
 
