@@ -9,13 +9,16 @@ systemctl start docker
 systemctl enable docker
 
 #check docker installation
-docker -version
+docker --version
 
 if [ "$?" -ne 0]
 then
   echo "docker installation failed"
   exit 1
 fi
+
+#add current user to docker user group
+sudo usermod -aG docker ${USER}
 
 #install docker compose
 apt install curl -y
@@ -31,8 +34,6 @@ then
   exit 1
 fi
 
-#install git client
-apt-get install git-core -y
 
 
 
