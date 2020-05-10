@@ -1,0 +1,18 @@
+{
+  "/Batteries/*": {
+    "target": "http://localhost:8000",
+    "secure": false
+  },
+  "/Wheels/*": {
+    "target": "http://localhost:8000",
+    "secure": false
+  },
+  "/Tires/*": {
+    "target": "http://localhost:8000",
+    "secure": false
+  },
+  "/Orders/*": {
+    "target": "http://localhost:8000",
+    "secure": false
+  }
+}

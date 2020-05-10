@@ -1,0 +1,53 @@
+version: '3'
+
+services:
+
+  db:
+    image: carsales-db
+    build:
+      context: database
+      dockerfile: Dockerfile
+    environment:
+      MYSQL_DATABASE: ${dn_name}
+      MYSQL_ROOT_PASSWORD: ${db_root_pass}
+      MYSQL_USER: ${db_user}
+      MYSQL_PASSWORD: ${db_pass}
+    restart: always
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:4.8.3
+    depends_on:
+      - db
+    environment:
+      PMA_HOST: ${db_host}
+      PMA_PORT: ${db_port}
+    restart: always
+    ports:
+      - '8080:80'
+
+  backend:
+    image: carsales-backend
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    environment:
+      DB_DATABASE: ${dn_name}
+      DB_HOST: ${db_host}
+      DB_USER: ${db_user}
+      DB_PASSWORD: ${db_pass}
+    restart: always
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  frontend:
+    image: carsales-frontend
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "80:80"
+    links:
+      - backend

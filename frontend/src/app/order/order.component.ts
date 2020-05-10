@@ -63,7 +63,7 @@ export class OrderComponent implements OnInit {
   }
 
   submitOrder(){
-    if(this.customerName === undefined) {
+    if(this.customerName === undefined || this.customerName === "") {
       this.notifier.notify("Warning", "name can not be empty!");
       return
     }

@@ -44,6 +44,12 @@ func (c *SqlManager) ListAllOrders() ([]Orders, error) {
 					join Tires T on Orders.TireID = T.ID
 					join Wheels W on Orders.WheelID = W.ID`)
 	err := c.db.Select(&order, getStatement)
+
+	//avoid return nil when there is no order
+	if order == nil {
+		return []Orders{}, err
+	}
+
 	return order, err
 }
 
