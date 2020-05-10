@@ -63,4 +63,14 @@ To turn off the service, simply
 docker-compose down
 ```
 
-Please note that the data in database will be persisted across sessions
+Please note that the data stored in database will be persisted even if the service is off (i.e stored in docker volume)
+
+## Further statement
+
+Instead of designing a nice UI and working on optional requirements, I have invested time to make the service near production ready, this include:
+* use light and production grade containers for operating service
+* avoid expose backend API to public, the API calls from frontend will be proxied (by ngix) to backend via docker virtual network
+
+The following improvement to the backend should be done (not done by me due to time constraint)
+* Mocking of SQL DB to unit testing the DB operation (A potential mocking framework: https://github.com/DATA-DOG/go-sqlmock)
+* Mocking of some functions to unit testing the REST handler (A potential mocking framework: https://github.com/golang/mock)
