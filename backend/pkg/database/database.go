@@ -102,9 +102,7 @@ func (c *SqlManager) SubmitOrder(customerName string, batteryId int, tireId int,
 		return order, errors.New("tire cannot be selected based on chosen wheel")
 	}
 
-	//GMT +2 Timezone
-	location, _ := time.LoadLocation("Europe/Rome")
-	lastFriday := isLastFriday(time.Now().In(location))
+	lastFriday := isLastFriday(time.Now())
 	netPrice := battery.Price + wheel.Price + tire.Price + BASEPRICE
 	var finalPrice int
 	if lastFriday {
@@ -170,11 +168,14 @@ func validateTiresAvailability(db *sqlx.DB, tireID int, wheelId int) bool {
 }
 
 func isLastFriday(t time.Time) bool {
-	y := t.Year()
-	m := t.Month()
-	firstDayOfNextMonth := time.Date(y, m+1, 1, 0, 0, 0, 0, time.UTC).Add(-24 * time.Hour)
+	//Set to German Timezone
+	loc, _ := time.LoadLocation("Europe/Berlin")
+	now := t.In(loc)
+	y := now.Year()
+	m := now.Month()
+	firstDayOfNextMonth := time.Date(y, m+1, 1, 0, 0, 0, 0, time.UTC).Add(-24 * time.Hour).In(loc)
 	lastFridayOfThisMonth := firstDayOfNextMonth.Add(-time.Duration((firstDayOfNextMonth.Weekday()+7-time.Friday)%7) * 24 * time.Hour)
-	return t.YearDay() == lastFridayOfThisMonth.YearDay()
+	return now.YearDay() == lastFridayOfThisMonth.YearDay()
 }
 
 func (c *SqlManager) ListWheelsByBattery(batteryId int) ([]Wheels, error) {

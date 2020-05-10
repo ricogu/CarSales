@@ -7,7 +7,8 @@ import (
 )
 
 func TestIsLastFriday(t *testing.T) {
-	location, _ := time.LoadLocation("Europe/Rome")
+	location, _ := time.LoadLocation("Europe/Berlin")
+
 	lastFriday := time.Date(2020, 4, 24, 14, 0, 0, 0, location)
 	notLastFriday := time.Date(2020, 4, 17, 14, 0, 0, 0, location)
 	notFriday := time.Date(2020, 4, 23, 14, 0, 0, 0, location)
