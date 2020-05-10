@@ -38,6 +38,9 @@ sudo chmod 771 installTooling.sh
 
 #run the script to install tools if missing, the tools include docker, curl and docker compose, please use sudo here
 sudo ./installTooling.sh
+
+#add current user to docker user group
+sudo usermod -aG docker ${USER}
 ```
 
 Important: Now since we added our current user to the docker user group in the tooling script, we need to **log off the ubuntu machine and log in again** with the same user

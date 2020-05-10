@@ -10,13 +10,10 @@ apt install curl -y
 curl -fsSL https://get.docker.com -o get-docker.sh
 sh get-docker.sh
 
-#add current user to docker user group
-usermod -aG docker ${USER}
-
 #check docker installation
 docker info
 
-if [ "$?" -ne 0]
+if [ "$?" -ne 0 ]
 then
   echo "docker installation failed"
   exit 1
@@ -31,7 +28,7 @@ chmod +x /usr/local/bin/docker-compose
 #check docker-compose installation
 docker-compose -version
 
-if [ "$?" -ne 0]
+if [ "$?" -ne 0 ]
 then
   echo "docker-compose installation failed"
   exit 1
