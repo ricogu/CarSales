@@ -3,13 +3,15 @@
 apt-get update -y
 apt-get upgrade -y
 
+#install curl
+apt install curl -y
+
 #install docker
-apt install docker.io -y
-systemctl start docker
-systemctl enable docker
+curl -fsSL https://get.docker.com -o get-docker.sh
+sh get-docker.sh
 
 #check docker installation
-docker --version
+docker info
 
 if [ "$?" -ne 0]
 then
@@ -18,10 +20,10 @@ then
 fi
 
 #add current user to docker user group
-sudo usermod -aG docker ${USER}
+usermod -aG docker ${USER}
 
 #install docker compose
-apt install curl -y
+
 curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 
