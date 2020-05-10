@@ -36,8 +36,6 @@ services:
       DB_USER: ${db_user}
       DB_PASSWORD: ${db_pass}
     restart: always
-    ports:
-      - "8000:8000"
     depends_on:
       - db
 
