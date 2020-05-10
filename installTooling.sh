@@ -10,6 +10,9 @@ apt install curl -y
 curl -fsSL https://get.docker.com -o get-docker.sh
 sh get-docker.sh
 
+#add current user to docker user group
+usermod -aG docker ${USER}
+
 #check docker installation
 docker info
 
@@ -19,8 +22,6 @@ then
   exit 1
 fi
 
-#add current user to docker user group
-usermod -aG docker ${USER}
 
 #install docker compose
 
