@@ -16,13 +16,13 @@ The service is build with the following component
 
 We will first go through the process to run the application, the targeted service is Ubuntu 18.04
 
-Since the entire service is dockerized and packed in the docker compose matter. It is quite easy yo run it with single command. But before that, we need to make sure the necessary software components are properly installed. 
+Since the entire service is dockerized and packed in the docker compose matter. It is quite easy to run. But before that, we need to make sure the necessary software components are properly installed. 
 The software component include:
 * Git Client : to get source code from github
 * Docker: to build and run the service as containers
 * Docker-compose: to provide simple container management, such as virtual networking, auto-restart,etc
 
-First step is to install git client and get source code, please run the comments as follow
+First step is to install git client and get source code, please run the comments as following:
 ```
 #install git client
 sudo apt-get install git-core -y
@@ -51,7 +51,7 @@ cd CarSales
 docker-compose up -d
 ```
 
-Wait for the compose to complete (around 10mins) and wait another 5s for database initialization
+Wait for the composing to complete (around 10 mins) and wait another 5s for database initialization
 
 If you are using a compute instance by a cloud provider (AWS, Azure, GCP, etc), please edit the security group to allow inbound TCP traffic on port 80 and 8080 
 

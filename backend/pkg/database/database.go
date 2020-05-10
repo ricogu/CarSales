@@ -102,7 +102,9 @@ func (c *SqlManager) SubmitOrder(customerName string, batteryId int, tireId int,
 		return order, errors.New("tire cannot be selected based on chosen wheel")
 	}
 
-	lastFriday := isLastFriday(time.Now())
+	//GMT +2 Timezone
+	location, _ := time.LoadLocation("Europe/Rome")
+	lastFriday := isLastFriday(time.Now().In(location))
 	netPrice := battery.Price + wheel.Price + tire.Price + BASEPRICE
 	var finalPrice int
 	if lastFriday {
